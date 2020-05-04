@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InputFilesToCopy Include="$(MSBuildThisFileDirectory)\Inputs\*" />
+  </ItemGroup>
+
+  <Target Name="CopyInputFilesToOutputDir" AfterTargets="Build">
+    <Copy SourceFiles="@(InputFilesToCopy)" DestinationFolder="$(OutputPath)\Inputs" />
+  </Target>
+
+  <ItemGroup>
+    <Compile Remove="Outputs\**" />
+    <Compile Remove="Inputs\**" />
+    <EmbeddedResource Remove="Outputs\**" />
+    <EmbeddedResource Remove="Inputs\**" />
+    <None Remove="Outputs\**" />
+    <None Remove="Inputs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+  </ItemGroup>
+
+</Project>
