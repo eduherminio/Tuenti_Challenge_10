@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-
-namespace TheLuckyOne
+﻿namespace TheLuckyOne
 {
     internal class Result
     {
