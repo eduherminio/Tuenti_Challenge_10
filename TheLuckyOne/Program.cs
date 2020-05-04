@@ -6,7 +6,7 @@
         {
             new TheLuckyOne("sampleInput").Solve();
             new TheLuckyOne("testInput").Solve();
-            //new TheLuckyOne("submitInput").Solve();
+            new TheLuckyOne("submitInput").Solve();
         }
     }
 }

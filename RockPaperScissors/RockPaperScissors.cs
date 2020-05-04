@@ -2,32 +2,26 @@
 using FileParser;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace RockPaperScissors
 {
     public class RockPaperScissors : BaseProblem
     {
+        private enum Item { R, P, S }
+
         public RockPaperScissors(string inputFileName) : base(inputFileName)
         {
         }
 
         public override void Solve()
         {
-            var input = ParseInput().ToList();
-            var solutions = new List<string>();
-
-            foreach (var battle in input)
-            {
-                var result = battle.Winner();
-                solutions.Add(result != Item.Draw ? result.ToString() : "-");
-            }
+            var solutions = Play().ToList();
 
             PrintOutput(solutions);
         }
 
-        private IEnumerable<Battle> ParseInput()
+        private IEnumerable<string> Play()
         {
             ParsedFile file = new ParsedFile(InputFilePath);
 
@@ -35,9 +29,18 @@ namespace RockPaperScissors
             for (int i = 0; i < lines; ++i)
             {
                 var line = file.NextLine();
-                yield return new Battle(
-                    (int)Enum.Parse(typeof(Item), line.NextElement<string>()),
-                    (int)Enum.Parse(typeof(Item), line.NextElement<string>()));
+
+                var player1 = (int)Enum.Parse(typeof(Item), line.NextElement<string>());
+                var player2 = (int)Enum.Parse(typeof(Item), line.NextElement<string>());
+                var players = new[] { player1, player2 };
+
+                yield return Math.Abs(player2 - player1) switch
+                {
+                    0 => "-",
+                    1 => ((Item)players.Max()).ToString(),
+                    2 => ((Item)players.Min()).ToString(),
+                    _ => throw new ArgumentException(@"¯\_(ツ)_/¯")
+                };
             }
         }
     }
